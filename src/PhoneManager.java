@@ -15,11 +15,10 @@ public class PhoneManager {
     public void addList(Scanner sc) {
         Phonebook phonebook = new Phonebook();
         System.out.println("Enter phone number: ");
-        phonebook.setPhoneNumber(sc.nextInt());
-        sc.nextLine();
+        String b = sc.next();
+        phonebook.setPhoneNumber(checkPN(b, sc));
         System.out.println("Enter group contacts: ");
-        phonebook.setGroupContacts(sc.nextInt());
-        sc.nextLine();
+        phonebook.setGroupContacts(sc.next());
         System.out.println("Enter a name: ");
         phonebook.setName(sc.next());
         System.out.println("Enter gender: ");
@@ -32,6 +31,18 @@ public class PhoneManager {
         phonebook.setEmail(sc.next());
         list.add(phonebook);
         writeToFile();
+    }
+
+    public String checkPN(String a, Scanner sc) {
+
+        for (Phonebook p : list) {
+            if (a.equals(p.getPhoneNumber())) {
+                System.out.println("Phone number exist.Try another phone number: ");
+                a = sc.next();
+                return checkPN(a, sc);
+            }
+        }
+        return a;
     }
 
     public void showList() {
@@ -51,10 +62,10 @@ public class PhoneManager {
         }
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter phone number: ");
-        int a = sc.nextInt();
+        String a = sc.next();
         sc.nextLine();
         for (Phonebook p : list) {
-            if (a == p.getPhoneNumber()) {
+            if (a.equals(p.getPhoneNumber())) {
                 return p;
             } else {
                 System.out.println("Don't have this phone number. Try again");
@@ -67,8 +78,8 @@ public class PhoneManager {
         Phonebook phonebook = phonebook();
         if (!Objects.isNull(phonebook)) {
             System.out.println("Enter group you want change: ");
-            phonebook.setGroupContacts(sc.nextInt());
-            sc.nextLine();
+            phonebook.setGroupContacts(sc.next());
+
         }
     }
 
@@ -116,6 +127,7 @@ public class PhoneManager {
         Phonebook phonebook = phonebook();
         if (!Objects.isNull(phonebook)) {
             list.remove(phonebook);
+            writeToFile();
         }
     }
 
@@ -132,9 +144,9 @@ public class PhoneManager {
         try {
             fileWriter = new FileWriter("src/file.csv");
             for (Phonebook phonebook : list) {
-                fileWriter.append(String.valueOf(phonebook.getPhoneNumber()));
+                fileWriter.append(phonebook.getPhoneNumber());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(phonebook.getGroupContacts()));
+                fileWriter.append(phonebook.getGroupContacts());
                 fileWriter.append(COMMA_DELIMITER);
                 fileWriter.append(phonebook.getName());
                 fileWriter.append(COMMA_DELIMITER);
@@ -148,10 +160,7 @@ public class PhoneManager {
                 fileWriter.append(NEW_LINE_SEPARATOR);
             }
             System.out.println("CSV file was created successfully !!!");
-        } catch (ClassCastException e) {
-            e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Error in CsvFileWriter !!!");
             e.printStackTrace();
         } finally {
             try {
@@ -169,13 +178,26 @@ public class PhoneManager {
         String splitBy = ",";
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/file.csv"));
-            while ((line = br.readLine()) != null)
-            {
+            while ((line = br.readLine()) != null) {
+                String[] phonebook = line.split(splitBy);
+                System.out.println("Phonebook: " + phonebook[0] + ", " + phonebook[1] + ", " + phonebook[2] + ", " + phonebook[3] + ", " + phonebook[4] + ", " + phonebook[5] + ", " + phonebook[6]);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeFileToList() {
+        String line = "";
+        String splitBy = ",";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/file.csv"));
+            while ((line = br.readLine()) != null) {
                 Phonebook pb = new Phonebook();
                 String[] phonebook = line.split(splitBy);
-                System.out.println("Phonebook: "+ phonebook[0] + ", " + phonebook[1] + ", " + phonebook[2] + ", " + phonebook[3] + ", " + phonebook[4] + ", " + phonebook[5] + ", " + phonebook[6]);
-                pb.setPhoneNumber(Integer.parseInt(phonebook[0]));
-                pb.setGroupContacts(Integer.parseInt(phonebook[1]));
+                pb.setPhoneNumber(phonebook[0]);
+                pb.setGroupContacts(phonebook[1]);
                 pb.setName(phonebook[2]);
                 pb.setGender(phonebook[3]);
                 pb.setAddress(phonebook[4]);

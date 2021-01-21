@@ -1,25 +1,25 @@
 public class Phonebook {
-    private int phoneNumber;
-    private int groupContacts;
+    private String phoneNumber;
+    private String groupContacts;
     private String name;
     private String gender;
     private String address;
     private String dateOfBirth;
     private String email;
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getGroupContacts() {
+    public String getGroupContacts() {
         return groupContacts;
     }
 
-    public void setGroupContacts(int groupContacts) {
+    public void setGroupContacts(String groupContacts) {
         this.groupContacts = groupContacts;
     }
 

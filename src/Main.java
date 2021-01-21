@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         PhoneManager pm = new PhoneManager();
+        pm.writeFileToList();
         int choice;
         do {
             System.out.println("1. Add phonebook");
