@@ -179,23 +179,9 @@ public class PhoneManager {
         try {
             BufferedReader br = new BufferedReader(new FileReader("src/file.csv"));
             while ((line = br.readLine()) != null) {
-                String[] phonebook = line.split(splitBy);
-                System.out.println("Phonebook: " + phonebook[0] + ", " + phonebook[1] + ", " + phonebook[2] + ", " + phonebook[3] + ", " + phonebook[4] + ", " + phonebook[5] + ", " + phonebook[6]);
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writeFileToList() {
-        String line = "";
-        String splitBy = ",";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("src/file.csv"));
-            while ((line = br.readLine()) != null) {
                 Phonebook pb = new Phonebook();
                 String[] phonebook = line.split(splitBy);
+                System.out.println("Phonebook: " + phonebook[0] + ", " + phonebook[1] + ", " + phonebook[2] + ", " + phonebook[3] + ", " + phonebook[4] + ", " + phonebook[5] + ", " + phonebook[6]);
                 pb.setPhoneNumber(phonebook[0]);
                 pb.setGroupContacts(phonebook[1]);
                 pb.setName(phonebook[2]);
@@ -209,5 +195,6 @@ public class PhoneManager {
             e.printStackTrace();
         }
     }
+
 
 }
